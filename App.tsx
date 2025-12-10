@@ -2,7 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 
-let globalCounter = 0;
+interface User{
+  id:string;
+  name:string;
+}
+
+
+interface AppState{
+  name:String;
+  email:String;
+  users:User[];
+  count:number;
+  isLoading:boolean;
+}
 
 export default function App() {
   // BAD: Using 'any' everywhere
@@ -222,7 +234,7 @@ export default function App() {
           <View>
             <View>
               <Text style={{fontSize: 12, color: '#999', textAlign: 'center'}}>
-                This component is full of bad practices for interview purposes
+                 component is full of bad practices for interview purposes
               </Text>
             </View>
           </View>
