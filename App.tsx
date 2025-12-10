@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useCallback,useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, FlatList,ListRenderItem } from 'react-native';
 
 interface User{
   id:string;
@@ -17,14 +17,13 @@ interface AppState{
 }
 
 export default function App() {
-  // BAD: Using 'any' everywhere
-  const [data, setData]: any = useState({
-    name: '',
-    email: '',
-    users: [],
-    count: 0,
-    isLoading: false
-  });
+ const [name,setName]=useState<string>('');
+ const [email,setEmail]=useState<string>('');
+ const [users,setUsers]=useState<User[]>([]);
+ const [count,setCount]=useState<number>(0);
+ const [isLoading,setIsLoading]=useState<boolean>(false);
+ const [addCount,setAddCount]=useState<number>(0);
+
 
   const [x, setX] = useState('');
   const [y, setY] = useState(0);
@@ -32,24 +31,10 @@ export default function App() {
   const a = useRef(false);
   const b = 5;
 
-  console.log('Component rendering');
-  console.log('Current data:', data);
 
 
-  const handlePress = () => {
-    console.log('Button pressed');
-
-    data.count = data.count + 1;
-    setData(data);
-
-    globalCounter++;
 
   
-    setTimeout(() => {
-      data.name = 'Updated';
-      setData(data);
-    }, 100);
-  };
 
 
   const doSomething = () => {
@@ -178,7 +163,7 @@ export default function App() {
 
         <View style={{marginTop: 25}}>
           <Text style={{fontSize: 18, fontWeight: '600', marginBottom: 10}}>
-            Count: {data.count} | Y: {y} | Global: {globalCounter}
+            Count: {data.count} | Y: {y} 
           </Text>
           <Text style={{fontSize: 14, color: '#666'}}>
             Expensive calc: {expensiveCalc.toFixed(2)}
@@ -245,24 +230,8 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 16,
-  },
-  button: {
-    padding: 10,
-  }
-});
 
-function unusedHelper() {
-  console.log('This function is never called');
-  return 42;
-}
 
-export const UNUSED_CONSTANT = 'unused';
+
+
+
